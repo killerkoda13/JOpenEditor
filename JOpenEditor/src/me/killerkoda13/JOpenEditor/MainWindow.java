@@ -25,6 +25,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JEditorPane;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -34,7 +37,12 @@ import java.io.File;
 import javax.swing.JTabbedPane;
 import javax.swing.BoxLayout;
 
+import me.killerkoda13.JOpenEditor.FileIO.Open;
 import me.killerkoda13.JOpenEditor.FileIO.Save;
+
+import java.awt.ScrollPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /***
  *		---------------------------------
@@ -47,6 +55,7 @@ public class MainWindow extends JFrame {
 	private JPanel contentPane;
 	public static JTabbedPane tabbedPane;
 	public static JFrame frame;
+	public static JLabel lblLines;
 	/**
 	 * Launch the application.
 	 */
@@ -55,6 +64,9 @@ public class MainWindow extends JFrame {
 			public void run() {
 				try {
 					MainWindow frame = new MainWindow();
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+					SwingUtilities.updateComponentTreeUI(frame);
 					MainWindow.frame = frame;
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -80,6 +92,9 @@ public class MainWindow extends JFrame {
 		JMenuItem mntmOpen = new JMenuItem("Open");
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				FileDialog dialog = new FileDialog(frame, "Open file", FileDialog.LOAD);
+				dialog.show();
+				Open.open(new File(dialog.getDirectory()+"/"+dialog.getFile()));
 				System.out.println("Initiate open file dialog.");
 			}
 		});
@@ -89,7 +104,7 @@ public class MainWindow extends JFrame {
 		mnFile.add(mntmNew);
 		mntmNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JEditorPane editorPane = new JEditorPane();
+				Editor editorPane = new Editor();
 				editorPane.setFont(new Font("Raleway Light", Font.PLAIN, 18));
 				MainWindow.tabbedPane.addTab("New file", editorPane);
 				System.out.println("New file tab.");
@@ -101,10 +116,11 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				FileDialog dialog = new FileDialog(frame, "Save file", FileDialog.SAVE);
 				dialog.show();
-				JEditorPane pane = (JEditorPane) tabbedPane.getSelectedComponent();
+				JScrollPane pane = (JScrollPane) tabbedPane.getSelectedComponent();
 				tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(), dialog.getFile());
 				File file = new File(dialog.getDirectory()+"/"+dialog.getFile());
-				Save.save(pane.getText(), file);
+				Editor jpane = (Editor) pane.getViewport().getComponents()[0];
+				Save.save(jpane.getText(), file);
 
 				System.out.println(dialog.getFile());
 				System.out.println("Save File action!");
@@ -116,15 +132,30 @@ public class MainWindow extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
+		panel.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				System.out.println(e);
+				JScrollPane pane = (JScrollPane) tabbedPane.getSelectedComponent();
+				Editor jedit = (Editor) pane.getViewport().getComponents()[0];
+				lblLines.setText("Lines: "+jedit.getText().split("\n").length);
+			}
+		});
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		panel.add(tabbedPane);
 		
-		JEditorPane editorPane = new JEditorPane();
-		tabbedPane.addTab("New file", null, editorPane, null);
+		Editor editorPane = new Editor();
+
+		JScrollPane scroll = new JScrollPane(editorPane);
+		tabbedPane.addTab("New file", null, scroll, null);
 		editorPane.setFont(new Font("Raleway Light", Font.PLAIN, 18));
 		contentPane.add(panel);
+		
+		 lblLines = new JLabel("Lines: ");
+		contentPane.add(lblLines, BorderLayout.SOUTH);
 	}
 }
 
