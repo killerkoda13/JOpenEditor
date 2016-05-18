@@ -39,21 +39,22 @@ import javax.swing.BoxLayout;
 
 import me.killerkoda13.JOpenEditor.FileIO.Open;
 import me.killerkoda13.JOpenEditor.FileIO.Save;
+import me.killerkoda13.JOpenEditor.Modules.Editor;
+import me.killerkoda13.JOpenEditor.Modules.JTabbedPaneCloseButton;
 
-import java.awt.ScrollPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /***
  *		---------------------------------
  *		@Author Killerkoda13 (Alex Jones)
- *		@date Apr 11, 2016
+ *		@date May 18, 2016
  *		---------------------------------
  */
 public class MainWindow extends JFrame {
 
 	private JPanel contentPane;
-	public static JTabbedPane tabbedPane;
+	public static JTabbedPaneCloseButton tabbedPane;
 	public static JFrame frame;
 	public static JLabel lblLines;
 	/**
@@ -82,24 +83,27 @@ public class MainWindow extends JFrame {
 	public MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 790, 773);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
-		
+
 		JMenuItem mntmOpen = new JMenuItem("Open");
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FileDialog dialog = new FileDialog(frame, "Open file", FileDialog.LOAD);
 				dialog.show();
-				Open.open(new File(dialog.getDirectory()+"/"+dialog.getFile()));
+				if(dialog.getDirectory() !=null && dialog.getFile() !=null)
+				{
+					Open.open(new File(dialog.getDirectory()+"/"+dialog.getFile()));
+				}
 				System.out.println("Initiate open file dialog.");
 			}
 		});
-		mnFile.add(mntmOpen);
 		
+		mnFile.add(mntmOpen);
 		JMenuItem mntmNew = new JMenuItem("New");
 		mnFile.add(mntmNew);
 		mntmNew.addActionListener(new ActionListener() {
@@ -110,27 +114,30 @@ public class MainWindow extends JFrame {
 				System.out.println("New file tab.");
 			}
 		});
-		JMenuItem mntmSave = new JMenuItem("Save");
+		
+		JMenuItem mntmSave = new JMenuItem("Save as");
 		mnFile.add(mntmSave);
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FileDialog dialog = new FileDialog(frame, "Save file", FileDialog.SAVE);
 				dialog.show();
-				JScrollPane pane = (JScrollPane) tabbedPane.getSelectedComponent();
-				tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(), dialog.getFile());
-				File file = new File(dialog.getDirectory()+"/"+dialog.getFile());
-				Editor jpane = (Editor) pane.getViewport().getComponents()[0];
-				Save.save(jpane.getText(), file);
-
-				System.out.println(dialog.getFile());
+				if(dialog.getDirectory() !=null && dialog.getFile() !=null)
+				{
+					JScrollPane pane = (JScrollPane) tabbedPane.getSelectedComponent();
+					tabbedPane.setTitleAt(tabbedPane.getSelectedIndex(), dialog.getFile());
+					File file = new File(dialog.getDirectory()+"/"+dialog.getFile());
+					Editor jpane = (Editor) pane.getViewport().getComponents()[0];
+					Save.save(jpane.getText(), file);
+				}
 				System.out.println("Save File action!");
 			}
 		});
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel = new JPanel();
 		panel.addKeyListener(new KeyAdapter() {
 			@Override
@@ -141,20 +148,21 @@ public class MainWindow extends JFrame {
 				lblLines.setText("Lines: "+jedit.getText().split("\n").length);
 			}
 		});
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
-		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+
+		tabbedPane = new JTabbedPaneCloseButton(JTabbedPane.TOP);
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		panel.add(tabbedPane);
-		
+
 		Editor editorPane = new Editor();
 
 		JScrollPane scroll = new JScrollPane(editorPane);
 		tabbedPane.addTab("New file", null, scroll, null);
 		editorPane.setFont(new Font("Raleway Light", Font.PLAIN, 18));
 		contentPane.add(panel);
-		
-		 lblLines = new JLabel("Lines: ");
+
+		lblLines = new JLabel("Lines: ");
 		contentPane.add(lblLines, BorderLayout.SOUTH);
 	}
 }

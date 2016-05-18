@@ -1,9 +1,11 @@
-package me.killerkoda13.JOpenEditor;
+package me.killerkoda13.JOpenEditor.Modules;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JEditorPane;
+
+import me.killerkoda13.JOpenEditor.MainWindow;
 
 /***
  *		---------------------------------
