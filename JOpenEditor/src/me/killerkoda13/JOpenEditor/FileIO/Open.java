@@ -35,7 +35,7 @@ public class Open {
 		try {
 			while((str = reader.readLine()) != null)
 			{
-				contents +=""+str;
+				contents += str+"\n";
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
