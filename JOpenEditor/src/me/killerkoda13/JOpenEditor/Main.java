@@ -16,6 +16,7 @@ public class Main {
 		System.out.println("You pass butter.");
 		System.out.println("Oh my god...");
 		System.out.println("Yeah, Welcome to the club pal.");
+	
 		MainWindow.display();
 	}
 

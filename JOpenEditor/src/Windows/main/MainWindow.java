@@ -1,7 +1,6 @@
 package Windows.main;
 
 import java.awt.BorderLayout;
-import java.awt.Dialog;
 import java.awt.EventQueue;
 import java.awt.FileDialog;
 
@@ -9,24 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Windows.ftp.FileTree1;
-
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.factories.FormFactory;
-
-import javax.swing.JToolBar;
-
-import java.awt.GridLayout;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
-import javax.swing.JEditorPane;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -125,8 +111,8 @@ public class MainWindow extends JFrame {
 		mntmOpenftp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				FileTree1 window = new FileTree1();
-				System.out.println("Open FTP");
+				System.out.println("Open FTP - WIP");
+				JOptionPane.showMessageDialog(null, "Feature not finished!");
 			}
 		});
 		mntmSave.addActionListener(new ActionListener() {
