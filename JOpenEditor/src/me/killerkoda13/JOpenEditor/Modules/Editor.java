@@ -26,5 +26,10 @@ public class Editor extends JEditorPane{
 			}
 		});
 	}
+	
+	public void setText(String text)
+	{
+		setText(text);
+	}
 }
 
