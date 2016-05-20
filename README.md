@@ -4,4 +4,5 @@ Open source java based text editor.
 
 ___
 # TODO
-- [ ] FTP window
+- [ ] Seemless FTP file editing
+- [ ] Split view
