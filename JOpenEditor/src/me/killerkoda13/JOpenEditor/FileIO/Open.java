@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import javax.swing.JEditorPane;
 
-import me.killerkoda13.JOpenEditor.MainWindow;
+import Windows.main.MainWindow;
 
 /***
  *		---------------------------------

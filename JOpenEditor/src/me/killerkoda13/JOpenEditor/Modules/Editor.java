@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JEditorPane;
 
-import me.killerkoda13.JOpenEditor.MainWindow;
+import Windows.main.MainWindow;
 
 /***
  *		---------------------------------

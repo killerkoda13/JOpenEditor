@@ -1,4 +1,4 @@
-package me.killerkoda13.JOpenEditor;
+package Windows.main;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog;
@@ -8,6 +8,8 @@ import java.awt.FileDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Windows.ftp.FileTree1;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -117,6 +119,16 @@ public class MainWindow extends JFrame {
 		
 		JMenuItem mntmSave = new JMenuItem("Save as");
 		mnFile.add(mntmSave);
+		
+		JMenuItem mntmOpenftp = new JMenuItem("Open FTP");
+		mnFile.add(mntmOpenftp);
+		mntmOpenftp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				FileTree1 window = new FileTree1();
+				System.out.println("Open FTP");
+			}
+		});
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FileDialog dialog = new FileDialog(frame, "Save file", FileDialog.SAVE);

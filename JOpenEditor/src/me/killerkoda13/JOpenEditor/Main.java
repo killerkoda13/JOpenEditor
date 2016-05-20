@@ -1,5 +1,7 @@
 package me.killerkoda13.JOpenEditor;
 
+import Windows.main.MainWindow;
+
 /***
  *		---------------------------------
  *		@Author Killerkoda13 (Alex Jones)
