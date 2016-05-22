@@ -1,21 +1,10 @@
 package me.killerkoda13.JOpenEditor.Modules;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Insets;
-import java.awt.event.MouseAdapter;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.UIManager;
-import javax.swing.plaf.metal.MetalIconFactory;
+import java.net.URL;
 
 /***
  *		---------------------------------
@@ -72,12 +61,13 @@ public class JTabbedPaneCloseButton extends JTabbedPane{
 	            setLayout(flowLayout);
 	            JLabel jLabel = new JLabel(title);
 	            jLabel.setIcon(icon);
-	            add(jLabel);
-	            JButton button = new JButton(new ImageIcon("Assets/Icons/closeiconshade2.png"));
-	            button.setMargin(new Insets(0, 0, 0, 0));
-	            button.addMouseListener((MouseListener) new CloseListener(tab));
-	            add(button);
-	        }
+                Component add = add(jLabel);
+                URL imageurl = getClass().getResource("/me/killerkoda13/JOpenEditor/Assets/closeiconshade2.png");
+                JButton button = new JButton(new ImageIcon(Toolkit.getDefaultToolkit().getImage(imageurl)));
+                button.setMargin(new Insets(0, 0, 0, 0));
+                button.addMouseListener(new CloseListener(tab));
+                add(button);
+            }
 	    }
 	    /* ClickListener */
 	    public class CloseListener implements MouseListener

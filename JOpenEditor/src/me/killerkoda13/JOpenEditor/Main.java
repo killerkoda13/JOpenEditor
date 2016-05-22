@@ -1,6 +1,6 @@
 package me.killerkoda13.JOpenEditor;
 
-import Windows.main.MainWindow;
+import me.killerkoda13.JOpenEditor.Windows.main.MainWindow;
 
 /***
  *		---------------------------------

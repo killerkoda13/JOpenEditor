@@ -1,15 +1,10 @@
 package me.killerkoda13.JOpenEditor.FileIO;
 
-import java.awt.Font;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import me.killerkoda13.JOpenEditor.Windows.main.MainWindow;
 
-import javax.swing.JEditorPane;
-
-import Windows.main.MainWindow;
+import javax.swing.*;
+import java.awt.*;
+import java.io.*;
 
 /***
  *		---------------------------------
